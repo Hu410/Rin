@@ -1,8 +1,11 @@
-name: Deploy
+name: Deploy Server to Cloudflare Workers
 
 on:
+  #push:
+  #  branches:
+  #    - master
+  #    - fix/*
   workflow_dispatch:
-
 jobs:
   deploy:
     runs-on: ubuntu-latest
@@ -21,17 +24,17 @@ jobs:
       - name: Set up Bun
         uses: oven-sh/setup-bun@v1
         with:
-          bun-version: 1.2.13
+          bun-version: latest
 
       - name: Deploy
         env: # Or as an environment variable
-          CLOUDFLARE_ACCOUNT_ID: ${{ secrets.CLOUDFLARE_ACCOUNT_ID  }}
-          CLOUDFLARE_API_TOKEN: ${{ secrets.CLOUDFLARE_API_TOKEN  }}
-          S3_ACCESS_KEY_ID: ${{ secrets.S3_ACCESS_KEY_ID }}
-          S3_SECRET_ACCESS_KEY: ${{ secrets.S3_SECRET_ACCESS_KEY }}
-          JWT_SECRET: ${{ secrets.JWT_SECRET }}
-          RIN_GITHUB_CLIENT_ID: ${{ secrets.RIN_GITHUB_CLIENT_ID }}
-          RIN_GITHUB_CLIENT_SECRET: ${{ secrets.RIN_GITHUB_CLIENT_SECRET }}
+          CLOUDFLARE_ACCOUNT_ID: ${{ vars.CLOUDFLARE_ACCOUNT_ID  }}
+          CLOUDFLARE_API_TOKEN: ${{ vars.CLOUDFLARE_API_TOKEN  }}
+          S3_ACCESS_KEY_ID: ${{ vars.S3_ACCESS_KEY_ID }}
+          S3_SECRET_ACCESS_KEY: ${{ vars.S3_SECRET_ACCESS_KEY }}
+          JWT_SECRET: ${{ vars.JWT_SECRET }}
+          RIN_GITHUB_CLIENT_ID: ${{ vars.RIN_GITHUB_CLIENT_ID }}
+          RIN_GITHUB_CLIENT_SECRET: ${{ vars.RIN_GITHUB_CLIENT_SECRET }}
 
           DB_NAME: ${{ vars.DB_NAME }}
           WORKER_NAME: ${{ vars.WORKER_NAME }}
